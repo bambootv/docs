@@ -22,13 +22,19 @@ ssh <alias_name>
 
 - On server:
 
-```
+```bash
 # Change port:
+
 nano /etc/ssh/sshd_config
 Port 123456
 systemctl restart sshd
-netstat -tulpn | grep ssh
-ssh -p 123456 192.168.1.100
+or
+sudo systemctl restart ssh
+
+# Test port
+ss -tlnp | grep sshd
+LISTEN 0      128          0.0.0.0:123456      0.0.0.0:*    users:(("sshd",pid=347278,fd=3))
+LISTEN 0      128             [::]:123456         [::]:*    users:(("sshd",pid=347278,fd=4))
 
 # Disable login with password for all accout
 PasswordAuthentication no
@@ -38,7 +44,7 @@ If see PasswordAuthentication yes, set it to no
 If not working, read more about
 ChallengeResponseAuthentication no
 
-#Login with key:
+# Login with key:
 sudo useradd -m -s /usr/bin/zsh <username>
 sudo passwd <username>
 ls -l ~/.ssh/
