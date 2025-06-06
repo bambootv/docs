@@ -185,6 +185,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 mkdir /etc/docker
 sudo nano /etc/docker/daemon.json
 {
+  "iptables": false,
   "log-driver": "json-file", # none
   "log-opts": {
     "max-size": "1m",
