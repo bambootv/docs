@@ -197,6 +197,48 @@ sudo systemctl stop docker.socket // If can not restart and restart again
 ```
 [sudo permission ](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
 
+None root user
+```
+ARG UID=10100
+ARG GID=10100
+
+RUN addgroup -g $GID appgroup && adduser -u $UID -G appgroup -S appuser
+
+WORKDIR /app
+COPY --from=builder /app/cache/dist .
+COPY --from=builder /app/cache/node_modules ./node_modules
+COPY --from=builder /app/cache/package.json ./package.json
+COPY --from=builder /app/cache/ecosystem.prod.config.cjs ./ecosystem.prod.config.cjs
+COPY --from=builder /app/cache/kysely/seeds/data ./kysely/seeds/data
+
+RUN chown -R appuser:appgroup /app
+
+USER appuser
+
+CMD ["pm2-runtime", "start", "ecosystem.prod.config.cjs"]
+
+EXPOSE 3000
+```
+
+```root@ai-school-prod-dash-ubuntu-s-2vcpu-2gb-90gb-intel-nyc3-01:/workspace/production/ai_school/backend/public# ls -la
+total 6992
+drwxr-xr-x 3 root root    4096 Jun  7 04:24 .
+drwxr-xr-x 9 root root    4096 Jul 26 04:13 ..
+-rw-r--r-- 1 root root       0 Jun  6 00:15 README.md
+drwxr-xr-x 5 root root    4096 Jun  6 10:49 assets
+-rw-r--r-- 1 root root 7143791 Jun  6 11:03 assets.zip
+root@ai-school-prod-dash-ubuntu-s-2vcpu-2gb-90gb-intel-nyc3-01:/workspace/production/ai_school/backend/public#
+root@ai-school-prod-dash-ubuntu-s-2vcpu-2gb-90gb-intel-nyc3-01:/workspace/production/ai_school/backend/public#
+root@ai-school-prod-dash-ubuntu-s-2vcpu-2gb-90gb-intel-nyc3-01:/workspace/production/ai_school/backend/public# sudo chown -R 10100:10100 assets
+root@ai-school-prod-dash-ubuntu-s-2vcpu-2gb-90gb-intel-nyc3-01:/workspace/production/ai_school/backend/public# ls -la
+total 6992
+drwxr-xr-x 3 root  root     4096 Jun  7 04:24 .
+drwxr-xr-x 9 root  root     4096 Jul 26 04:13 ..
+-rw-r--r-- 1 root  root        0 Jun  6 00:15 README.md
+drwxr-xr-x 5 10100 10100    4096 Jun  6 10:49 assets
+-rw-r--r-- 1 root  root  7143791 Jun  6 11:03 assets.zip
+```
+
 5. scp
 
 ```
