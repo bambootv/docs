@@ -23,4 +23,15 @@
      Mở Terminal > Preferences (hoặc iTerm2 nếu bạn dùng iTerm2).
      Chọn tab Profiles → Text (hoặc Appearance).
      Ở mục Font, chọn một font có chữ Powerline hoặc Nerd Font, ví dụ: MesloLGS NF, Hack Nerd Font, FiraCode Nerd Font, DejaVu Sans Mono for Powerline
+
+
+     https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh
+     https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#oh-my-zsh
+     plugins=(
+      git
+      dotenv
+      macos
+      zsh-syntax-highlighting
+      zsh-autosuggestions
+     )
    ```
