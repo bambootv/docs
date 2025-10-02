@@ -51,4 +51,10 @@
       	prompt_hg
       	prompt_end
       }
+
+
+   Vào menu:
+   iTerm2 → Settings (hoặc Preferences) → Profiles → (chọn profile đang dùng, thường là Default)
+   Trong tab General, phần Initial Directory
+   Chọn: Reuse previous session’s directory
    ```
