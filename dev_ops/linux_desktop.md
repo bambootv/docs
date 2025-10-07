@@ -26,7 +26,7 @@ plugins=(git zsh-autosuggestions)
 
 export PATH=/opt/homebrew/bin:$PATH
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#e6f2ff"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5c6370"
 
 prompt_dir() {
 	prompt_segment blue $CURRENT_FG '%c'
