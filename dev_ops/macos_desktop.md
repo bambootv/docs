@@ -35,6 +35,8 @@
       zsh-autosuggestions
      )
 
+     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#5c6370"
+
       prompt_dir() {
       	prompt_segment blue $CURRENT_FG '%c'
       }
