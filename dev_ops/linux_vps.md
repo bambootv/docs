@@ -242,9 +242,11 @@ drwxr-xr-x 5 10100 10100    4096 Jun  6 10:49 assets
 5. scp
 
 ```
-scp -P 2290 public/uploads.zip root@159.223.64.220:
-scp -i ~/.ssh/id_rsa_server  -P 2290 public/uploads.zip root@159.223.64.220:
-scp user@server:/path/to/remotefile.zip /Local/Target/Destination
+# Upload
+scp -i ~/.ssh/id_rsa_server -P 23 public/uploads.zip root@159.223.64.220:
+
+# Download
+scp -i ~/.ssh/id_rsa_...... -P 23 user@server:/path/to/remotefile.zip /Local/Target/Destination
 ```
 
 6. npm
