@@ -100,6 +100,56 @@ sudo truncate --size 0 /var/log/nginx/access.log // truncate to 0 kb and increas
 ```
 
 ```
+# Socket io
+sudo nano /etc/nginx/nginx.conf
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    # Add new this one
+    map $http_upgrade $connection_upgrade {
+        default upgrade;
+        ''      close;
+    }
+    # Add new this one
+	
+    sendfile on;
+    keepalive_timeout 65;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+}
+
+sudo nano /etc/nginx/sites-available/default
+server {
+    listen 80;
+    access_log off; # if don't want get logs
+    server_name shoppinglistapistaging.ecomobileapp.com;
+
+    location /socket.io/ {
+        proxy_pass http://127.0.0.1:3001/socket.io/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Accept-Encoding "";
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+    }
+
+    location / {
+        proxy_set_header Host $host;
+        proxy_pass http://127.0.0.1:3001;
+        proxy_redirect off;
+    }
+}
+
+```
+
+```
 Note: Remember config sticky session
 https://github.com/socketio/socket.io/issues/4239#issuecomment-1011912700
 https://socketio.bootcss.com/docs/using-multiple-nodes/#NginX-configuration
