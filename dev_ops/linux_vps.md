@@ -124,7 +124,7 @@ sudo nano /etc/nginx/sites-available/default
 server {
     listen 80;
     access_log off; # if don't want get logs
-    server_name shoppinglistapistaging.ecomobileapp.com;
+    server_name abc.com;
 
     location /socket.io/ {
         proxy_pass http://127.0.0.1:3001/socket.io/;
