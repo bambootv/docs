@@ -55,6 +55,33 @@ chmod 600 ~/.ssh/authorized_keys
 nano ~/.ssh/authorized_keys
 ```
 
+
+- Add person:
+
+```
+sudo adduser new_user
+groups new_user
+
+ssh-keygen -t ed25519
+cat ~/.ssh/id_ed25519.pub
+
+mkdir /home/new_user/.ssh
+sudo nano /home/new_user/.ssh/authorized_keys
+
+sudo chown -R new_user:new_user /home/new_user/.ssh
+sudo chmod 700 /home/new_user/.ssh
+sudo chmod 600 /home/new_user/.ssh/authorized_keys
+
+sudo usermod -aG docker new_user # Add full perrmisson on docker, near to root
+
+sudo groupadd workspace
+sudo usermod -aG workspace new_user
+sudo chown -R root:workspace /workspace
+sudo chmod -R 770 /workspace
+
+sudo chmod g+s /workspace # 👉 Khi devuser tạo file mới: file tự động thuộc group workspace, tránh lỗi “người khác không sửa được”
+```
+
 2. nginx
 
 ```
