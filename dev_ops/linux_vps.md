@@ -82,6 +82,25 @@ sudo chmod -R 770 /workspace
 sudo chmod g+s /workspace # 👉 Khi devuser tạo file mới: file tự động thuộc group workspace, tránh lỗi “người khác không sửa được”
 ```
 
+- Update security
+```
+sudo nano /etc/ssh/sshd_config
+
+PermitRootLogin prohibit-password
+X11Forwarding no
+PubkeyAuthentication yes
+MaxAuthTries 3   # I can be combined with Fail2ban
+
+ClientAliveInterval 300      # 5 phút
+ClientAliveCountMax 2        # 2 lần thử
+# → Timeout sau 10 phút không hoạt động
+
+AllowUsers root junior_dev@10.0.*.*
+
+
+
+```
+
 2. nginx
 
 ```
