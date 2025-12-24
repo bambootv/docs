@@ -1,17 +1,14 @@
 1. SSH
 
-- On local:
+- Gen ssh key:
 
-```
-ls -l ~/.ssh/id*
-mkdir ~/.ssh
-chmod 700 ~/.ssh
-ssh-keygen
-ssh-keygen -b 4096 -t rsa
+```bash
+ssh-keygen -t ed25519 -C "devuser@company"  # -C: Comment, who owner this key
    /home/<username>/.ssh/id_rsa_<server_name>
 ls -l ~/.ssh/
 cat /home/<username>/.ssh/id_rsa_<server_name>.pub
 
+# Update config
 nano ~/.ssh/config
 Host <alias_name>
     HostName xxx.xxx.xx.xxx
@@ -19,42 +16,6 @@ Host <alias_name>
     Port xxx
 ssh <alias_name>
 ```
-
-- On server:
-
-```bash
-# Change port:
-
-nano /etc/ssh/sshd_config
-Port 123456
-systemctl restart sshd
-or
-sudo systemctl restart ssh
-
-# Test port
-ss -tlnp | grep sshd
-LISTEN 0      128          0.0.0.0:123456      0.0.0.0:*    users:(("sshd",pid=347278,fd=3))
-LISTEN 0      128             [::]:123456         [::]:*    users:(("sshd",pid=347278,fd=4))
-
-# Disable login with password for all accout
-PasswordAuthentication no
-nano /etc/ssh/sshd_config.d/50-cloud-init.conf  # It will mix with ssh/sshd_config
-If see PasswordAuthentication yes, set it to no
-
-If not working, read more about
-ChallengeResponseAuthentication no
-
-# Login with key:
-sudo useradd -m -s /usr/bin/zsh <username>
-sudo passwd <username>
-ls -l ~/.ssh/
-mkdir ~/.ssh
-chmod 700 ~/.ssh
-touch authorized_keys
-chmod 600 ~/.ssh/authorized_keys
-nano ~/.ssh/authorized_keys
-```
-
 
 - Add person:
 
@@ -83,22 +44,40 @@ sudo chmod g+s /workspace # 👉 Khi devuser tạo file mới: file tự động
 ```
 
 - Update security
-```
-sudo nano /etc/ssh/sshd_config
+  
+```bash
+# Thay đổi cổng SSH mặc định (22) sang cổng khác để giảm scan/bruteforce
+Port 123456
 
+# Tắt đăng nhập SSH bằng mật khẩu cho TẤT CẢ user
+# Chỉ cho phép đăng nhập bằng SSH key
+# Lưu ý: các file trong /etc/ssh/sshd_config.d/*.conf có thể override setting này
+PasswordAuthentication no
+
+# Không cho root đăng nhập bằng mật khẩu
+# Root chỉ được đăng nhập bằng SSH key
 PermitRootLogin prohibit-password
+
+# Tắt X11 Forwarding để giảm bề mặt tấn công (không dùng GUI qua SSH)
 X11Forwarding no
+
+# Bật xác thực bằng public key (SSH key)
 PubkeyAuthentication yes
-MaxAuthTries 3   # I can be combined with Fail2ban
 
-ClientAliveInterval 300      # 5 phút
-ClientAliveCountMax 2        # 2 lần thử
-# → Timeout sau 10 phút không hoạt động
+# Giới hạn số lần thử đăng nhập sai tối đa là 3 lần
+# Có thể kết hợp với Fail2ban để tự động ban IP
+MaxAuthTries 3
 
+# Server gửi keepalive mỗi 300 giây (5 phút)
+ClientAliveInterval 300
+
+# Cho phép client không phản hồi tối đa 2 lần
+# → Tổng thời gian idle tối đa: 300 x 2 = 600 giây (10 phút)
+ClientAliveCountMax 2
+
+# Chỉ cho phép user root và user junior_dev đăng nhập SSH
+# junior_dev chỉ được đăng nhập từ dải IP nội bộ 10.0.*.*
 AllowUsers root junior_dev@10.0.*.*
-
-
-
 ```
 
 2. nginx
