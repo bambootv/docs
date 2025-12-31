@@ -182,4 +182,5 @@ sudo ntfsfix /dev/nvme0n1p7
 sudo ss -tulpn | grep :80
 sudo kill -QUIT 882397
 du -h / -ah
+du -h -d 1 /root/.pm2/logs | sort -hr
 ```
