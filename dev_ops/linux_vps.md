@@ -62,28 +62,29 @@ PasswordAuthentication no
 # Root chỉ được đăng nhập bằng SSH key
 PermitRootLogin prohibit-password
 
+# Giới hạn số lần thử đăng nhập sai tối đa là 3 lần
+# Có thể kết hợp với Fail2ban để tự động ban IP
+MaxAuthTries 3
+
 # Tắt X11 Forwarding để giảm bề mặt tấn công (không dùng GUI qua SSH)
 X11Forwarding no
 
 # Bật xác thực bằng public key (SSH key)
 PubkeyAuthentication yes
 
-# Giới hạn số lần thử đăng nhập sai tối đa là 3 lần
-# Có thể kết hợp với Fail2ban để tự động ban IP
-MaxAuthTries 3
-
-# Server gửi keepalive mỗi 300 giây (5 phút)
+# SSH keepalive: disconnect client sau  300 x 2 = 600 giây = 10 phút idle
 ClientAliveInterval 300
-
-# Cho phép client không phản hồi tối đa 2 lần
-# → Tổng thời gian idle tối đa: 300 x 2 = 600 giây (10 phút)
 ClientAliveCountMax 2
+
+# Chỉ cho phép SSH:
+# - root: từ mọi IP
+# - junior_dev: chỉ từ dải ip xx.xx.*.*
+AllowUsers root junior_dev@xx.xx.*.*
 
 # Chỉ cho phép user root và user junior_dev đăng nhập SSH
 # junior_dev chỉ được đăng nhập từ dải IP nội bộ 10.0.*.*
 AllowUsers root junior_dev@10.0.*.*
 ```
-
 
 ```bash
 sudo service sshd restart
