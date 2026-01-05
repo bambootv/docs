@@ -46,6 +46,8 @@ sudo chmod g+s /workspace # 👉 Khi devuser tạo file mới: file tự động
 - Update security
   
 ```bash
+sudo nano /etc/ssh/sshd_config
+
 # Thay đổi cổng SSH mặc định (22) sang cổng khác để giảm scan/bruteforce
 Port 123456
 
