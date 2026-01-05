@@ -90,6 +90,12 @@ AllowUsers root junior_dev@10.0.*.*
 sudo service sshd restart
 ```
 
+- SSH Tunnel
+
+```bash
+ssh -R <server_port>:localhost:<local_port> -i ~/.ssh/xxx -p xxx root@xxx.xxx.xxx.xxx
+```
+
 2. nginx
 
 ```
