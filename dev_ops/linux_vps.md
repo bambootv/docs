@@ -47,7 +47,9 @@ sudo chmod g+s /workspace # 👉 Khi devuser tạo file mới: file tự động
   
 ```bash
 sudo nano /etc/ssh/sshd_config
+```
 
+```bash
 # Thay đổi cổng SSH mặc định (22) sang cổng khác để giảm scan/bruteforce
 Port 123456
 
@@ -80,6 +82,11 @@ ClientAliveCountMax 2
 # Chỉ cho phép user root và user junior_dev đăng nhập SSH
 # junior_dev chỉ được đăng nhập từ dải IP nội bộ 10.0.*.*
 AllowUsers root junior_dev@10.0.*.*
+```
+
+
+```bash
+sudo service sshd restart
 ```
 
 2. nginx
