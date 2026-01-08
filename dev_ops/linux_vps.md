@@ -423,7 +423,30 @@ htop: CPU / RAM
 echo 1 >/proc/sys/vm/overcommit_memory
 ```
 
-11. Nginx & Telegraf & Prometheus & Grafana
+11. Socket Statistics
+
+```
+ss # Apps nào đang listen port nào
+
+Netid  State   Recv-Q  Send-Q  Local Address:Port    Peer Address:Port  Process
+tcp    LISTEN  0       128     0.0.0.0:80           0.0.0.0:*          users:(("nginx",pid=1234))
+tcp    LISTEN  0       128     127.0.0.1:3306       0.0.0.0:*          users:(("mysqld",pid=5678))
+tcp    LISTEN  0       128     [::]:22              [::]:*             users:(("sshd",pid=910))
+udp    UNCONN  0       0       0.0.0.0:53           0.0.0.0:*          users:(("systemd-resolve",pid=800))
+```
+
+
+<img width="767" height="340" alt="image" src="https://github.com/user-attachments/assets/86b5207e-7b5e-4ec9-92da-2e1eca164f74" />
+
+<img width="760" height="350" alt="image" src="https://github.com/user-attachments/assets/0b1bdbc3-e088-4b1a-b405-f06576294d1c" />
+
+
+```
+sudo ss -tulpn state listening # Hay dùng
+```
+
+
+12. Nginx & Telegraf & Prometheus & Grafana
 
 - Nginx
 
