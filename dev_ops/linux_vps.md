@@ -363,7 +363,64 @@ Host github.com_<app_name>
 git clone git@github.com_<app_name>:xxx/xxx.git
 ```
 
-8. SSL
+8. Check connect to VPS
+   
+```bash
+sudo lastb # Lịch sử truy cập thất bại
+
+# ssh:notty
+# ssh: Đăng nhập qua giao thức SSH
+# notty: "no TTY" = không có terminal thật (pseudo-terminal)
+# Nghĩa là: Đây là các lần thử đăng nhập SSH tự động (bằng script/bot), không phải người dùng thật ngồi gõ lệnh
+```
+
+```bash
+sudo last # Lịch sử truy cập thành công
+```
+
+```bash
+last reboot -F
+```
+
+9. Fail2ban
+
+```bash
+sudo apt update
+sudo apt install fail2ban -y
+sudo systemctl start fail2ban
+sudo systemctl enable fail2ban
+
+# Kiểm tra
+sudo fail2ban-client status sshd
+```
+
+```bash
+sudo nano /etc/fail2ban/jail.local
+
+[DEFAULT]
+# Tăng thời gian ban lên
+bantime = 24h          # Ban 24 giờ thay vì 10 phút
+findtime = 1h          # Theo dõi trong 1 giờ thay vì 10 phút
+maxretry = 3           # Giảm xuống 3 lần thay vì 5
+
+# Ban vĩnh viễn sau nhiều lần tái phạm
+bantime.increment = true
+bantime.multipliers = 1 5 10 50 100 500
+bantime.maxtime = 5w   # Tối đa ban 5 tuần
+
+[sshd]
+enabled = true
+port = 22123456789
+logpath = /var/log/auth.log
+maxretry = 3
+findtime = 1h
+bantime = 24h
+
+
+sudo systemctl restart fail2ban
+```
+
+10. SSL
 
 ```
 sudo apt install certbot
@@ -409,7 +466,7 @@ sudo crontab -e
 ls -la /etc/letsencrypt/live/abc.com
 ```
 
-9. Monitoring
+12. Monitoring
 
 ```
 iotop: Disk I/O
@@ -417,13 +474,13 @@ htop: CPU / RAM
 ???: Bandwidth
 ```
 
-10. Redis
+13. Redis
 
 ```
 echo 1 >/proc/sys/vm/overcommit_memory
 ```
 
-11. Socket Statistics
+14. Socket Statistics
 
 ```
 ss # Apps nào đang listen port nào
@@ -446,7 +503,7 @@ sudo ss -tulpn state listening # Hay dùng
 ```
 
 
-12. Nginx & Telegraf & Prometheus & Grafana
+15. Nginx & Telegraf & Prometheus & Grafana
 
 - Nginx
 
