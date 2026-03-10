@@ -96,7 +96,30 @@ sudo service sshd restart
 ssh -R <server_port>:localhost:<local_port> -i ~/.ssh/xxx -p xxx root@xxx.xxx.xxx.xxx
 ```
 
-2. nginx
+2. User
+
+```
+# Create a user named 'deploy' (or any name you prefer)
+adduser deploy
+
+# Add the user to the sudo group if needed
+usermod -aG sudo deploy
+
+# Change ownership to the new user
+chown -R deploy:deploy /path
+
+# Changer user
+su - deploy
+
+# Thêm user hiện tại vào group docker
+sudo usermod -aG docker $USER
+
+# Kích hoạt thay đổi group (không cần logout)
+newgrp docker
+
+```
+
+3. Nginx
 
 ```
 sudo nano /etc/nginx/sites-available/default
@@ -223,7 +246,7 @@ http {
 }
 ```
 
-3. ufw
+4. Ufw
 
 ```
 sudo nano /etc/default/ufw
@@ -251,10 +274,10 @@ sudo ufw allow 'Nginx Full'
 sudo ufw delete allow 'Nginx HTTP'
 ```
 
-4. docker
+5. Docker
 
-```
-bash# Thêm user hiện tại vào group docker
+```bash
+# Thêm user hiện tại vào group docker
 sudo usermod -aG docker $USER
 
 # Kích hoạt thay đổi group (không cần logout)
@@ -338,7 +361,7 @@ drwxr-xr-x 5 10100 10100    4096 Jun  6 10:49 assets
 -rw-r--r-- 1 root  root  7143791 Jun  6 11:03 assets.zip
 ```
 
-5. scp
+6. Scp
 
 ```
 # Upload
@@ -348,13 +371,7 @@ scp -i ~/.ssh/id_rsa_server -P 23 public/uploads.zip root@159.223.64.220:
 scp -i ~/.ssh/id_rsa_...... -P 23 user@server:/path/to/remotefile.zip /Local/Target/Destination
 ```
 
-6. npm
-
-```
-apt install npm
-```
-
-7. git
+7. Git
 
 ```
 Multi ssh for diffrent project
@@ -371,7 +388,7 @@ Host github.com_<app_name>
 git clone git@github.com_<app_name>:xxx/xxx.git
 ```
 
-8. Check connect to VPS
+*. Check connect to VPS
    
 ```bash
 sudo lastb # Lịch sử truy cập thất bại
@@ -474,7 +491,7 @@ sudo crontab -e
 ls -la /etc/letsencrypt/live/abc.com
 ```
 
-12. Monitoring
+11. Monitoring
 
 ```
 iotop: Disk I/O
@@ -482,13 +499,13 @@ htop: CPU / RAM
 ???: Bandwidth
 ```
 
-13. Redis
+12. Redis
 
 ```
 echo 1 >/proc/sys/vm/overcommit_memory
 ```
 
-14. Socket Statistics
+13. Socket Statistics
 
 ```
 ss # Apps nào đang listen port nào
@@ -511,7 +528,7 @@ sudo ss -tulpn state listening # Hay dùng
 ```
 
 
-15. Nginx & Telegraf & Prometheus & Grafana
+14. Nginx & Telegraf & Prometheus & Grafana
 
 - Nginx
 
