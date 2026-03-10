@@ -361,6 +361,22 @@ drwxr-xr-x 5 10100 10100    4096 Jun  6 10:49 assets
 -rw-r--r-- 1 root  root  7143791 Jun  6 11:03 assets.zip
 ```
 
+6. Github Action self-host runner
+```
+# Install the service
+sudo ./svc.sh install
+
+# Start the service
+sudo ./svc.sh start
+
+# Check status
+sudo ./svc.sh status
+
+# Other useful commands:
+# sudo ./svc.sh stop
+# sudo ./svc.sh uninstall
+```
+
 6. Scp
 
 ```
