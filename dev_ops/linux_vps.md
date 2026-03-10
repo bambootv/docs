@@ -102,7 +102,7 @@ ssh -R <server_port>:localhost:<local_port> -i ~/.ssh/xxx -p xxx root@xxx.xxx.xx
 
 ```
 # Create a user named 'deploy' (or any name you prefer)
-adduser deploy
+sudo useradd -u 10100 deploy
 
 # Add the user to the sudo group if needed
 usermod -aG sudo deploy
