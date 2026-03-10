@@ -8,6 +8,8 @@ ssh-keygen -t ed25519 -C "devuser@company"  # -C: Comment, who owner this key
 ls -l ~/.ssh/
 cat /home/<username>/.ssh/id_rsa_<server_name>.pub
 
+chmod 600 /paht_to_private_key # If need
+
 # Update config
 nano ~/.ssh/config
 Host <alias_name>
