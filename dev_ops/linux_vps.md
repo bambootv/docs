@@ -254,6 +254,14 @@ sudo ufw delete allow 'Nginx HTTP'
 4. docker
 
 ```
+bash# Thêm user hiện tại vào group docker
+sudo usermod -aG docker $USER
+
+# Kích hoạt thay đổi group (không cần logout)
+newgrp docker
+```
+
+```
 # Add Docker's official GPG key:
 sudo apt-get update
 sudo apt-get install ca-certificates curl
