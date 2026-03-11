@@ -102,7 +102,13 @@ ssh -R <server_port>:localhost:<local_port> -i ~/.ssh/xxx -p xxx root@xxx.xxx.xx
 
 ```
 # Create a user named 'deploy' (or any name you prefer)
-sudo useradd -u 10100 deploy
+sudo adduser --uid 10100 deploy
+# useradd là lệnh gốc
+# ❌ không tạo home directory
+# ❌ không hỏi password
+# ❌ không copy file .bashrc
+# ❌ không hỏi thông tin user
+# chỉ tạo record trong /etc/passwd
 
 # Add the user to the sudo group if needed
 usermod -aG sudo deploy
@@ -119,6 +125,9 @@ sudo usermod -aG docker $USER
 # Kích hoạt thay đổi group (không cần logout)
 newgrp docker
 
+# Xoá user
+sudo userdel deploy # Low-level utility
+sudo deluser deploy # High-level wrapper
 ```
 
 3. Nginx
