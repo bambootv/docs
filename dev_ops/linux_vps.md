@@ -70,7 +70,7 @@ sudo nano /etc/ssh/sshd_config
 
 ```bash
 # Thay đổi cổng SSH mặc định (22) sang cổng khác để giảm scan/bruteforce
-Port 123456
+Port 1234
 
 # Tắt đăng nhập SSH bằng mật khẩu cho TẤT CẢ user
 # Chỉ cho phép đăng nhập bằng SSH key
@@ -107,6 +107,9 @@ AllowUsers root junior_dev@10.0.*.*
 
 ```bash
 sudo service sshd restart
+
+systemctl daemon-reload
+systemctl restart ssh.socket
 ```
 
 - SSH Tunnel
