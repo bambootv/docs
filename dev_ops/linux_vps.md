@@ -20,8 +20,8 @@ ssh <alias_name>
 ```
 
 ```bash
-Dùng ssh-copy-id (đơn giản nhất):
-ssh-copy-id username@ip_vps
+# Dùng ssh-copy-id (đơn giản nhất):
+ssh-copy-id -i ~/.ssh/id_ed25519_laptop.pub
 
 # Xem nội dung public key
 cat ~/.ssh/id_ed25519.pub
