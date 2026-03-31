@@ -19,6 +19,23 @@ Host <alias_name>
 ssh <alias_name>
 ```
 
+```bash
+Dùng ssh-copy-id (đơn giản nhất):
+ssh-copy-id username@ip_vps
+
+# Xem nội dung public key
+cat ~/.ssh/id_ed25519.pub
+
+# SSH vào VPS rồi paste vào file authorized_keys
+mkdir -p ~/.ssh
+nano ~/.ssh/authorized_keys
+# Paste nội dung public key vào, lưu lại
+
+# Phân quyền trên VPS
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+```
+
 - Add person:
 
 ```
