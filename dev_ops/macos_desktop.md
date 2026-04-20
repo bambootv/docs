@@ -60,3 +60,9 @@
    Trong tab General, phần Initial Directory
    Chọn: Reuse previous session’s directory
    ```
+
+
+2. Move to Next Display
+   ```bash
+   brew install --cask rectangle
+   ```
