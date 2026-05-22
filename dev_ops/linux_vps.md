@@ -414,6 +414,9 @@ sudo ./svc.sh status
 # Upload
 scp -i ~/.ssh/id_rsa_server -P 23 public/uploads.zip root@159.223.64.220:
 
+Hoặc trong .ssh/config đã cấu hình rồi thì có thể gọi theo alias.
+
+
 # Download
 scp -i ~/.ssh/id_rsa_...... -P 23 user@server:/path/to/remotefile.zip /Local/Target/Destination
 ```
