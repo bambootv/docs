@@ -408,6 +408,13 @@ sudo ./svc.sh status
 # sudo ./svc.sh uninstall
 ```
 
+7. Hight disk usage
+```
+Kiểm tra xem thư mục nào đang chiếm nhiều dung lượng, debug dần dần vào
+du -xh / --max-depth=1 2>/dev/null | sort -rh | head -15
+du -xh /var/log --max-depth=1 2>/dev/null | sort -rh | head -15
+```
+
 6. Scp
 
 ```
