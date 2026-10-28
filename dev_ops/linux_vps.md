@@ -413,6 +413,7 @@ sudo ./svc.sh status
 Kiểm tra xem thư mục nào đang chiếm nhiều dung lượng, debug dần dần vào
 du -xh / --max-depth=1 2>/dev/null | sort -rh | head -15
 du -xh /var/log --max-depth=1 2>/dev/null | sort -rh | head -15
+du -xh /var/lib/docker/volumes/* 2>/dev/null | sort -rh | head -15
 ```
 
 6. Scp
